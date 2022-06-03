@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
 
 function App() {
+  const [data, setData] = useState(null);
+  const [toogle, setToogle] = useState(false);
+
+  const onClick = () => setToogle((prev) => !prev);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setData({});
+    }, 100);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {toogle === true && <div data-testid="toogle-el">toogle</div>}
+      {data && <div style={{ color: "red" }}>data</div>}
+      <h1>Hello world</h1>
+      <button data-testid="toogle-btn" onClick={onClick}>
+        Click me
+      </button>
+      <input type="text" placeholder="input value..." />
     </div>
   );
 }
