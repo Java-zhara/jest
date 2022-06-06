@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import App from "./App";
 
 describe("TEST APP", () => {
@@ -36,5 +37,22 @@ describe("TEST APP", () => {
     expect(screen.getByTestId("toogle-el")).toBeInTheDocument();
     fireEvent.click(btn);
     expect(screen.queryByTestId("toogle-el")).toBeNull();
+  });
+
+  test("input event", () => {
+    render(<App />);
+
+    const input = screen.getByPlaceholderText(/input value/i);
+
+    expect(screen.queryByTestId("value-el")).toContainHTML("");
+    //Искуственное событие
+    // fireEvent.input(input, {
+    //   target: { value: "123" },
+    // });
+
+    // Близко к пользователю, обрабатываются события нажатий клавишь и т.д.
+    userEvent.type(input, "123");
+
+    expect(screen.queryByTestId("value-el")).toContainHTML("123");
   });
 });
